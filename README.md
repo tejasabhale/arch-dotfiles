@@ -1,4 +1,4 @@
-# Tejas OS — Custom Arch Linux Desktop Environment + June AI
+# Custom Arch Linux Desktop Environment + June AI
 
 [![Arch Linux](https://img.shields.io/badge/Arch_Linux-Wayland-1793D1?logo=arch-linux&logoColor=white)](https://archlinux.org)
 [![Hyprland 0.55+](https://img.shields.io/badge/Hyprland-0.55+_Lua-00ACC1?logo=lua&logoColor=white)](https://hyprland.org)
