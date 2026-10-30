@@ -1,0 +1,40 @@
+name: CI Test & Lint Suite
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  test:
+    name: Run Python Tests & Static Syntax Verification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-asyncio respx anyio
+
+      - name: Run Python unit tests
+        run: |
+          python -m pytest tests/ -v
+
+      - name: Validate QML and Theme JSON syntax
+        run: |
+          python tests/test_qml_syntax.py
+
+      - name: Validate Shell Script Syntax
+        run: |
+          bash -n install.sh
+          bash -n uninstall.sh
+          bash -n backup/backup.sh

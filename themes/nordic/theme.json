@@ -1,0 +1,47 @@
+{
+  "name": "Nordic Light",
+  "displayName": "Nordic Light (Warm Light Blue)",
+  "type": "light",
+  "colors": {
+    "background": "#f6f8fa",
+    "backgroundBlur": "#f6f8faee",
+    "surface": "#ffffff",
+    "surfaceVariant": "#eaeef2",
+    "surfaceHover": "#e1e4e8",
+    "border": "#d0d7de",
+    "borderFocus": "#0969da",
+    "accent": "#0969da",
+    "accentHover": "#218bff",
+    "accentMuted": "#ddf4ff",
+    "textPrimary": "#1f2328",
+    "textSecondary": "#57606a",
+    "textMuted": "#8c959f",
+    "success": "#1a7f37",
+    "warning": "#9a6700",
+    "danger": "#cf222e",
+    "info": "#0969da"
+  },
+  "metrics": {
+    "radiusSmall": 6,
+    "radiusMedium": 10,
+    "radiusLarge": 16,
+    "borderWidth": 1,
+    "barHeight": 38,
+    "dockHeight": 58,
+    "dockIconSize": 42
+  },
+  "typography": {
+    "fontFamilyUi": "Noto Sans",
+    "fontFamilyMono": "JetBrainsMono Nerd Font",
+    "fontSizeSmall": 11,
+    "fontSizeNormal": 13,
+    "fontSizeLarge": 15,
+    "fontSizeTitle": 18
+  },
+  "effects": {
+    "blurEnabled": true,
+    "blurRadius": 15,
+    "shadowOpacity": 0.12,
+    "animationDurationMs": 180
+  }
+}

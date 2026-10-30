@@ -1,0 +1,59 @@
+# Security & Credentials - NEVER COMMIT SECRETS
+*.env
+*.env.*
+!.env.example
+secrets.json
+api_keys.json
+credentials.json
+*.pem
+*.key
+*.token
+id_rsa
+id_ed25519
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor & OS Artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/extensions.json
+
+# Logs & Sockets
+*.log
+*.pid
+*.sock
+*.tmp
+
+# Local User Configurations & Backups (during local testing)
+local_test/
+*.bak
+*.orig
+~/.config/tejas-os/
+config/local/

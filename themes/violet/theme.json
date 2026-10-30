@@ -1,0 +1,47 @@
+{
+  "name": "Violet",
+  "displayName": "Violet (Dark Purple)",
+  "type": "dark",
+  "colors": {
+    "background": "#120e1c",
+    "backgroundBlur": "#120e1cdd",
+    "surface": "#1d182b",
+    "surfaceVariant": "#29223d",
+    "surfaceHover": "#393054",
+    "border": "#3e345c",
+    "borderFocus": "#a855f7",
+    "accent": "#a855f7",
+    "accentHover": "#c084fc",
+    "accentMuted": "#6b21a8",
+    "textPrimary": "#f3e8ff",
+    "textSecondary": "#c084fc",
+    "textMuted": "#7e69ab",
+    "success": "#34d399",
+    "warning": "#fbbf24",
+    "danger": "#f87171",
+    "info": "#a855f7"
+  },
+  "metrics": {
+    "radiusSmall": 6,
+    "radiusMedium": 10,
+    "radiusLarge": 16,
+    "borderWidth": 1,
+    "barHeight": 38,
+    "dockHeight": 58,
+    "dockIconSize": 42
+  },
+  "typography": {
+    "fontFamilyUi": "Noto Sans",
+    "fontFamilyMono": "JetBrainsMono Nerd Font",
+    "fontSizeSmall": 11,
+    "fontSizeNormal": 13,
+    "fontSizeLarge": 15,
+    "fontSizeTitle": 18
+  },
+  "effects": {
+    "blurEnabled": true,
+    "blurRadius": 15,
+    "shadowOpacity": 0.28,
+    "animationDurationMs": 180
+  }
+}

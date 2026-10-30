@@ -1,0 +1,47 @@
+{
+  "name": "Forest",
+  "displayName": "Forest (Earthy Dark Green)",
+  "type": "dark",
+  "colors": {
+    "background": "#0f1410",
+    "backgroundBlur": "#0f1410dd",
+    "surface": "#18221a",
+    "surfaceVariant": "#222f25",
+    "surfaceHover": "#2c3d30",
+    "border": "#2e3f32",
+    "borderFocus": "#4ec970",
+    "accent": "#4ec970",
+    "accentHover": "#6ee78d",
+    "accentMuted": "#234e30",
+    "textPrimary": "#e8f5e9",
+    "textSecondary": "#9eb3a2",
+    "textMuted": "#5c7061",
+    "success": "#4ec970",
+    "warning": "#e5b53b",
+    "danger": "#e05252",
+    "info": "#4ec970"
+  },
+  "metrics": {
+    "radiusSmall": 6,
+    "radiusMedium": 10,
+    "radiusLarge": 16,
+    "borderWidth": 1,
+    "barHeight": 38,
+    "dockHeight": 58,
+    "dockIconSize": 42
+  },
+  "typography": {
+    "fontFamilyUi": "Noto Sans",
+    "fontFamilyMono": "JetBrainsMono Nerd Font",
+    "fontSizeSmall": 11,
+    "fontSizeNormal": 13,
+    "fontSizeLarge": 15,
+    "fontSizeTitle": 18
+  },
+  "effects": {
+    "blurEnabled": true,
+    "blurRadius": 15,
+    "shadowOpacity": 0.25,
+    "animationDurationMs": 180
+  }
+}
