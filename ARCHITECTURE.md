@@ -68,9 +68,10 @@ flowchart TD
 
 ## 2. Layer Specifications & Boundaries
 
-### 2.1 Layer A: Core Compositor Layer (Hyprland 0.55+ Lua)
+### 2.1 Layer A: Core Compositor Layer (Hyprland 0.55+ Lua & Compatibility Bridge)
 - **Role:** Window tiling, workspace switching, monitor hotplugging, display scaling, input device ergonomics, and hardware-accelerated Wayland rendering.
-- **Language Standard:** Native Lua (`hyprland.lua`), leveraging Hyprland 0.55+'s built-in Lua configuration engine with the global `hl` table. Legacy `hyprlang` (`hyprland.conf`) is strictly prohibited.
+- **Language Standard:** Native Lua (`hyprland.lua`), leveraging Hyprland 0.55+'s built-in Lua configuration engine with the global `hl` table.
+- **Version Compatibility:** Automated compositor version detection in `install.sh`. When Hyprland >= 0.55 is present, native `hyprland.lua` is executed. For older environments (< 0.55), an automated `hyprland.conf` configuration bridge is deployed to ensure 100% operational compatibility.
 - **Modularity:** Main `hyprland.lua` orchestrates self-contained modules under `modules/` (`monitors.lua`, `input.lua`, `keybindings.lua`, `layout.lua`, `windowrules.lua`, `animations.lua`, `autostart.lua`).
 - **Compositor IPC:** Communicates outward via Hyprland's UNIX sockets (`$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket.sock` for commands and `.socket2.sock` for asynchronous events).
 
@@ -80,10 +81,12 @@ flowchart TD
 - **Core Abstractions:**
   - `ShellRoot`: Global shell lifecycle container and settings distributor.
   - `PanelWindow`: Anchored Wayland surfaces attached to screen edges (`wlr-layer-shell`).
-  - `Variants`: Dynamic multi-screen repeater binding UI instances across active displays (`Quickshell.screens`).
-  - `Quickshell.Hyprland`: Reactive bindings to active workspaces, window focus, and monitor state.
-  - `Quickshell.Wayland`: Layer management and screenshot capture views.
+  - `Variants`: Dynamic multi-screen repeater binding per-screen panels (`TopBar`, `Dock`) across active displays (`Quickshell.screens`).
+  - `Singleton Overlay Scoping`: Modal dialogs (`Launcher`, `ControlCenter`, `NotificationCenter`, `AssistantWindow`, `Dashboard`, `ClipboardPanel`, `ScreenshotBar`) are scoped to the primary screen, eliminating duplicate memory and process instances when external monitors are connected.
+  - `HardwareService`: Centralized QML singleton caching Audio volume, Network SSID, and Battery capacity, eliminating redundant per-widget polling loops.
   - `ThemeService`: Centralized reactive token broker reading from active theme JSON files.
+  - `Lazy Subpage Loading`: Heavy settings pages (`FeatureManager`, `PerformancePage`, `BackupPage`) and developer tabs are loaded on demand via QML `Loader` elements.
+  - `Input Throttling`: Hardware sliders (Volume, Brightness) utilize 60ms debouncing timers, preventing command storms during mouse drags.
 
 ### 2.3 Layer C: System Integration Layer
 - **Role:** Mediates access to core Linux system services via native APIs and standard system daemons.

@@ -42,7 +42,6 @@ Item {
 
     Process {
         id: backupsProc
-        running: true
         stdout: SplitParser {
             splitMarker: ""
             onRead: data => {

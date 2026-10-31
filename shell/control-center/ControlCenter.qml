@@ -220,8 +220,8 @@ PanelWindow {
                         value: ccWindow.masterVolume
                         onValueChanged: function(v) {
                             ccWindow.masterVolume = v;
-                            var pct = Math.round(v * 100);
-                            execProc.exec("wpctl set-volume @DEFAULT_AUDIO_SINK@ " + (v).toFixed(2));
+                            ccWindow.pendingVolume = v;
+                            volumeDebounce.restart();
                         }
                     }
 
@@ -251,8 +251,8 @@ PanelWindow {
                         value: ccWindow.brightnessLevel
                         onValueChanged: function(v) {
                             ccWindow.brightnessLevel = v;
-                            var pct = Math.max(5, Math.round(v * 100));
-                            execProc.exec("brightnessctl set " + pct + "%");
+                            ccWindow.pendingBrightness = v;
+                            brightnessDebounce.restart();
                         }
                     }
 
@@ -363,6 +363,30 @@ PanelWindow {
                     }
                 }
             }
+        }
+    }
+
+    // Throttling timers for volume and brightness sliders to prevent subprocess storm
+    property real pendingVolume: masterVolume
+    property real pendingBrightness: brightnessLevel
+
+    Timer {
+        id: volumeDebounce
+        interval: 60
+        repeat: false
+        onTriggered: {
+            execProc.exec("wpctl set-volume @DEFAULT_AUDIO_SINK@ " + ccWindow.pendingVolume.toFixed(2));
+            HardwareService.refreshAudio();
+        }
+    }
+
+    Timer {
+        id: brightnessDebounce
+        interval: 60
+        repeat: false
+        onTriggered: {
+            var pct = Math.max(5, Math.round(ccWindow.pendingBrightness * 100));
+            execProc.exec("brightnessctl set " + pct + "%");
         }
     }
 

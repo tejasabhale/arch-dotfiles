@@ -144,3 +144,26 @@
 | Technical Dependency Catalog | 🟢 Completed | `DEPENDENCIES.md` | Complete Arch package catalog |
 | Testing Strategy & Matrix | 🟢 Completed | `TESTING.md` | Verification matrix & test strategy |
 | Full Suite of Docs (12 Guides + README) | 🟢 Completed | `docs/` | Comprehensive, zero-placeholder guides |
+
+---
+
+## 10. Performance & Architecture Optimization Refactor
+
+| Feature / Artifact | Status | Target Path | Notes |
+|---|---|---|---|
+| Comprehensive Codebase Audit | 🟢 Completed | `PERFORMANCE_AUDIT.md` | Subprocess, polling, IPC, memory & profiling audit |
+| Language & Subsystem Inventory | 🟢 Completed | `LANGUAGE_MAPPING.md` | Inventory of all 221 repository files & recommendations |
+| Phased Migration Plan | 🟢 Completed | `MIGRATION_PLAN.md` | 8-phase migration plan with verified rollback points |
+| Performance Benchmark Report | 🟢 Completed | `PERFORMANCE_REPORT.md` | Before/after metrics, RAM footprint, latency data |
+| Unified Hardware Service Singleton | 🟢 Completed | `shell/services/HardwareService.qml` | Eliminates duplicate 3s/10s/15s widget polling loops |
+| Top Bar Widgets Optimization | 🟢 Completed | `shell/widgets/*.qml` | Audio, Battery, Network bind to HardwareService |
+| Control Center Slider Debouncing | 🟢 Completed | `shell/control-center/ControlCenter.qml` | 60ms debounce prevents subprocess storms on drag |
+| Developer Hub Lazy Tab Loading | 🟢 Completed | `developer/DeveloperHub.qml` | Refreshes only active tab on open (1 vs 6 processes) |
+| Settings App Lazy Page Loading | 🟢 Completed | `shell/settings/SettingsApp.qml` | Subpages loaded on demand via QML `Loader` |
+| Feature Manager Startup Fix | 🟢 Completed | `shell/settings/FeatureManager.qml` | Removed double execution on startup |
+| Modal Overlays Singleton Scoping | 🟢 Completed | `shell/shell.qml` | Scoped dialogs to primary screen across multi-monitors |
+| Hyprland Fallback Configuration | 🟢 Completed | `core/hyprland/hyprland.conf` | Fallback bridge for Hyprland versions < 0.55 |
+| Installer Compositor Detection | 🟢 Completed | `install.sh` | Automated Hyprland version detection & Lua checks |
+| June Daemon Lazy Engines | 🟢 Completed | `assistant/core/daemon.py` | Lazy initializes screen, file, research, and voice |
+| June CLI Fast-Path Dispatch | 🟢 Completed | `assistant/core/cli.py` | Low-latency ping, history, and stop handling |
+| Syntax Automated Tests | 🟢 Completed | `tests/test_lua_syntax.py`, `tests/test_qml_syntax.py` | Pytest fixtures validating all 9 Lua & 41 QML files |

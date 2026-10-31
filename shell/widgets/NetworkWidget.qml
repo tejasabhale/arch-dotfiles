@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Layouts
-import Quickshell.Io
 import "../services"
 
 Rectangle {
@@ -8,8 +7,8 @@ Rectangle {
 
     signal clicked()
 
-    property bool isConnected: true
-    property string ssid: "Wi-Fi"
+    property bool isConnected: HardwareService.wifiConnected
+    property string ssid: HardwareService.wifiSsid
     property string icon: isConnected ? "󰤨" : "󰤮"
 
     implicitWidth: netLayout.implicitWidth + 12
@@ -18,31 +17,6 @@ Rectangle {
     color: mouseArea.containsMouse ? ThemeService.colors.surfaceHover : ThemeService.colors.surfaceVariant
     border.color: ThemeService.colors.border
     border.width: ThemeService.metrics.borderWidth
-
-    Process {
-        id: netProc
-        command: ["sh", "-c", "nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2"]
-        stdout: SplitParser {
-            onRead: function(data) {
-                var name = data.trim();
-                if (name) {
-                    netRoot.isConnected = true;
-                    netRoot.ssid = name;
-                } else {
-                    netRoot.isConnected = false;
-                    netRoot.ssid = "Disconnected";
-                }
-            }
-        }
-    }
-
-    Timer {
-        interval: 10000
-        running: true
-        repeat: true
-        triggeredOnStart: true
-        onTriggered: netProc.running = true
-    }
 
     RowLayout {
         id: netLayout

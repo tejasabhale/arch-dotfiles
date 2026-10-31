@@ -8,10 +8,7 @@ for interacting with June.
 import json
 from typing import Any, Dict, List, Optional
 
-from assistant.core.identity import IdentityManager
 from assistant.core.ipc import send_ipc_message
-from assistant.memory.conversation_store import ConversationStore
-from assistant.providers.registry import ProviderRegistry
 
 
 class JuneClient:
@@ -30,6 +27,10 @@ class JuneClient:
         return self._direct_dispatch(method, params or {})
 
     def _direct_dispatch(self, method: str, params: Dict[str, Any]) -> Any:
+        from assistant.core.identity import IdentityManager
+        from assistant.memory.conversation_store import ConversationStore
+        from assistant.providers.registry import ProviderRegistry
+
         identity = IdentityManager()
         store = ConversationStore()
         providers = ProviderRegistry()

@@ -145,6 +145,21 @@ if [ -f "/proc/meminfo" ]; then
     echo -e "  ${GREEN}[✓] Total System Memory: ${TOTAL_RAM_MB} MB (Target: <= 1.8GB Idle Footprint)${NC}"
 fi
 
+# Hyprland Version & Configuration Format Detection
+if command -v Hyprland >/dev/null 2>&1; then
+    HYPR_VER_RAW=$(Hyprland --version 2>&1 | head -n1)
+    echo -e "  ${GREEN}[✓] Detected Compositor: ${HYPR_VER_RAW}${NC}"
+    HYPR_NUM=$(echo "${HYPR_VER_RAW}" | grep -oE '[0-9]+\.[0-9]+' | head -n1)
+    if [ -n "${HYPR_NUM}" ]; then
+        HYPR_MIN=$(echo "${HYPR_NUM}" | cut -d. -f2)
+        if [ "${HYPR_MIN}" -ge 55 ] 2>/dev/null; then
+            echo -e "  ${GREEN}[✓] Hyprland >= 0.55: Deploying Native Lua configuration (hyprland.lua)${NC}"
+        else
+            echo -e "  ${YELLOW}[!] Hyprland < 0.55: Providing hyprland.conf compatibility bridge${NC}"
+        fi
+    fi
+fi
+
 # =============================================================================
 # 2. REQUIRED PACKAGES PRE-FLIGHT CHECK
 # =============================================================================

@@ -133,6 +133,23 @@ def validate_qml_file(path: str) -> bool:
     return True
 
 
+def test_theme_json_schemas():
+    assert validate_json_themes(), "Theme JSON schema validation failed"
+
+
+def test_quickshell_qml_syntax():
+    qml_files = (
+        glob.glob("shell/**/*.qml", recursive=True)
+        + glob.glob("system/**/*.qml", recursive=True)
+        + glob.glob("productivity/**/*.qml", recursive=True)
+        + glob.glob("assistant/**/*.qml", recursive=True)
+        + glob.glob("developer/**/*.qml", recursive=True)
+    )
+    assert qml_files, "No QML files found"
+    for f in qml_files:
+        assert validate_qml_file(f), f"QML syntax validation failed for file: {f}"
+
+
 def main():
     print("1. Validating Theme JSON Files...")
     if not validate_json_themes():

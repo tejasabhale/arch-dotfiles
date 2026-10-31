@@ -64,17 +64,57 @@ class JuneDaemon:
         self.permissions = PermissionEngine()
         self.planner = ActionPlanner(self.permissions)
         self.executor = ControlledExecutor(self.permissions)
-        self.screen = ScreenIntelligence()
-        self.files = FileIntelligence()
+        self._screen: Optional[ScreenIntelligence] = None
+        self._files: Optional[FileIntelligence] = None
         self.memory = MemoryManager(db_path=memory_db_path)
-        self.research = ResearchEngine()
-        self.voice = VoicePipeline()
+        self._research: Optional[ResearchEngine] = None
+        self._voice: Optional[VoicePipeline] = None
         self.lang_router = LanguageRouter(config_path=lang_config_path)
 
         self.start_time = time.time()
         self._running = False
         self._abort_flag = threading.Event()
         self._server_threads: list[threading.Thread] = []
+
+    @property
+    def screen(self) -> ScreenIntelligence:
+        if self._screen is None:
+            self._screen = ScreenIntelligence()
+        return self._screen
+
+    @screen.setter
+    def screen(self, val: ScreenIntelligence):
+        self._screen = val
+
+    @property
+    def files(self) -> FileIntelligence:
+        if self._files is None:
+            self._files = FileIntelligence()
+        return self._files
+
+    @files.setter
+    def files(self, val: FileIntelligence):
+        self._files = val
+
+    @property
+    def research(self) -> ResearchEngine:
+        if self._research is None:
+            self._research = ResearchEngine()
+        return self._research
+
+    @research.setter
+    def research(self, val: ResearchEngine):
+        self._research = val
+
+    @property
+    def voice(self) -> VoicePipeline:
+        if self._voice is None:
+            self._voice = VoicePipeline()
+        return self._voice
+
+    @voice.setter
+    def voice(self, val: VoicePipeline):
+        self._voice = val
 
     def dispatch(self, method: str, params: Dict[str, Any]) -> Any:
         """Dispatches a JSON-RPC method call to the appropriate internal handler."""

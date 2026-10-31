@@ -17,7 +17,7 @@ import "../assistant/interface"
 ShellRoot {
     id: shellRoot
 
-    // Multi-Monitor Screen Loop: Spawns desktop components across active displays
+    // Multi-Monitor Screen Loop: Spawns TopBar and Dock across all active displays
     Variants {
         model: Quickshell.screens
 
@@ -26,72 +26,77 @@ ShellRoot {
 
             TopBar {
                 screen: modelData
-                onOpenLauncher: launcherComp.toggle()
+                onOpenLauncher: ipcBridge.toggleLauncher()
                 onOpenAssistant: ipcBridge.toggleAssistant()
-                onOpenControlCenter: ccComp.toggle()
-                onOpenDashboard: dashComp.toggle()
+                onOpenControlCenter: ipcBridge.toggleControlCenter()
+                onOpenDashboard: ipcBridge.toggleDashboard()
             }
 
             Dock {
                 screen: modelData
             }
+        }
+    }
 
-            Launcher {
-                id: launcherComp
-                screen: modelData
-            }
+    // Modal Overlays & Centered Windows: Instantiated as Singletons on the Primary Screen
+    Scope {
+        property var primaryScreen: (Quickshell.screens && Quickshell.screens.length > 0) ? Quickshell.screens[0] : null
 
-            Overview {
-                id: overviewComp
-                screen: modelData
-            }
+        Launcher {
+            id: launcherComp
+            screen: primaryScreen
+        }
 
-            ControlCenter {
-                id: ccComp
-                screen: modelData
-            }
+        Overview {
+            id: overviewComp
+            screen: primaryScreen
+        }
 
-            NotificationCenter {
-                id: notifComp
-                screen: modelData
-            }
+        ControlCenter {
+            id: ccComp
+            screen: primaryScreen
+        }
 
-            OsdOverlay {
-                id: osdComp
-                screen: modelData
-            }
+        NotificationCenter {
+            id: notifComp
+            screen: primaryScreen
+        }
 
-            Dashboard {
-                id: dashComp
-                screen: modelData
-            }
+        OsdOverlay {
+            id: osdComp
+            screen: primaryScreen
+        }
 
-            ClipboardPanel {
-                id: clipComp
-                screen: modelData
-            }
+        Dashboard {
+            id: dashComp
+            screen: primaryScreen
+        }
 
-            ScreenshotBar {
-                id: screenComp
-                screen: modelData
-            }
+        ClipboardPanel {
+            id: clipComp
+            screen: primaryScreen
+        }
 
-            AssistantWindow {
-                id: assistantComp
-                screen: modelData
-            }
+        ScreenshotBar {
+            id: screenComp
+            screen: primaryScreen
+        }
 
-            Connections {
-                target: ipcBridge
-                function onLauncherToggled() { launcherComp.toggle(); }
-                function onAssistantToggled() { assistantComp.toggle(); }
-                function onOverviewToggled() { overviewComp.toggle(); }
-                function onControlCenterToggled() { ccComp.toggle(); }
-                function onNotificationsToggled() { notifComp.toggle(); }
-                function onDashboardToggled() { dashComp.toggle(); }
-                function onClipboardToggled() { clipComp.toggle(); }
-                function onScreenshotToggled() { screenComp.toggle(); }
-            }
+        AssistantWindow {
+            id: assistantComp
+            screen: primaryScreen
+        }
+
+        Connections {
+            target: ipcBridge
+            function onLauncherToggled() { launcherComp.toggle(); }
+            function onAssistantToggled() { assistantComp.toggle(); }
+            function onOverviewToggled() { overviewComp.toggle(); }
+            function onControlCenterToggled() { ccComp.toggle(); }
+            function onNotificationsToggled() { notifComp.toggle(); }
+            function onDashboardToggled() { dashComp.toggle(); }
+            function onClipboardToggled() { clipComp.toggle(); }
+            function onScreenshotToggled() { screenComp.toggle(); }
         }
     }
 

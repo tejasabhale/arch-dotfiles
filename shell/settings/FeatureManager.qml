@@ -18,7 +18,7 @@ Item {
     Component.onCompleted: refreshFeatures()
 
     function refreshFeatures() {
-        featuresProc.command = ["python3", "-c", "import json; from config.manager import ConfigManager; print(json.dumps(ConfigManager().get_features()))"];
+        featuresProc.command = ["python3", "-m", "config.manager", "--list-features", "--json"];
         featuresProc.running = true;
     }
 
@@ -31,7 +31,6 @@ Item {
 
     Process {
         id: featuresProc
-        running: true
         stdout: SplitParser {
             splitMarker: ""
             onRead: data => {

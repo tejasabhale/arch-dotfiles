@@ -38,7 +38,21 @@ PanelWindow {
     function toggle() {
         isOpen = !isOpen;
         if (isOpen) {
-            refreshAll();
+            refreshCurrentTab();
+        }
+    }
+
+    function refreshCurrentTab() {
+        if (activeTab === 0) refreshProjects();
+        else if (activeTab === 1) refreshGit();
+        else if (activeTab === 2) refreshPorts();
+        else if (activeTab === 3) refreshEnvs();
+        else if (activeTab === 4) refreshSSH();
+    }
+
+    onActiveTabChanged: {
+        if (isOpen) {
+            refreshCurrentTab();
         }
     }
 
@@ -84,21 +98,21 @@ PanelWindow {
 
     function killPort(port) {
         actionProc.command = ["python3", "-m", "developer.ports.ports_manager", "--kill", port.toString()];
+        actionProc.postActionCallback = refreshPorts;
         actionProc.running = true;
-        refreshPorts();
     }
 
     function stageAll() {
         actionProc.command = ["python3", "-m", "developer.git.git_manager", "--stage-all"];
+        actionProc.postActionCallback = refreshGit;
         actionProc.running = true;
-        refreshGit();
     }
 
     function commitGit(msg) {
         if (!msg) return;
         actionProc.command = ["python3", "-m", "developer.git.git_manager", "--commit", msg];
+        actionProc.postActionCallback = refreshGit;
         actionProc.running = true;
-        refreshGit();
     }
 
     function connectSSH(alias) {
@@ -182,6 +196,14 @@ PanelWindow {
 
     Process {
         id: actionProc
+        property var postActionCallback: null
+        onExited: (code, status) => {
+            if (postActionCallback) {
+                var cb = postActionCallback;
+                postActionCallback = null;
+                cb();
+            }
+        }
     }
 
     // Background Backdrop

@@ -322,10 +322,12 @@ PanelWindow {
                             Item { Layout.fillHeight: true }
                         }
 
-                        // 2. FEATURES & DAEMONS
-                        FeatureManager {
+                        // 2. FEATURES & DAEMONS (Lazy loaded on tab activation)
+                        Loader {
                             anchors.fill: parent
-                            visible: settingsWindow.activeCategory === "features"
+                            active: settingsWindow.activeCategory === "features"
+                            visible: active
+                            sourceComponent: FeatureManager {}
                         }
 
                         // 3. APPEARANCE & THEMES
@@ -417,16 +419,20 @@ PanelWindow {
                             Item { Layout.fillHeight: true }
                         }
 
-                        // 5. PERFORMANCE PROFILES
-                        PerformancePage {
+                        // 5. PERFORMANCE PROFILES (Lazy loaded)
+                        Loader {
                             anchors.fill: parent
-                            visible: settingsWindow.activeCategory === "performance"
+                            active: settingsWindow.activeCategory === "performance"
+                            visible: active
+                            sourceComponent: PerformancePage {}
                         }
 
-                        // 21. BACKUP & RECOVERY
-                        BackupPage {
+                        // 21. BACKUP & RECOVERY (Lazy loaded)
+                        Loader {
                             anchors.fill: parent
-                            visible: settingsWindow.activeCategory === "backup"
+                            active: settingsWindow.activeCategory === "backup"
+                            visible: active
+                            sourceComponent: BackupPage {}
                         }
 
                         // DEFAULT / FALLBACK FOR OTHER CATEGORIES

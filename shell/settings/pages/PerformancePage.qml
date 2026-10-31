@@ -29,7 +29,6 @@ Item {
     Process {
         id: profilesProc
         command: ["python3", "-c", "import json; from config.manager import ConfigManager; mgr = ConfigManager(); print(json.dumps({'active': mgr.get_active_profile(), 'profiles': mgr.get_profiles()}))"]
-        running: true
         stdout: SplitParser {
             splitMarker: ""
             onRead: data => {

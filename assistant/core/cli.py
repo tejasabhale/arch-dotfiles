@@ -25,6 +25,36 @@ from assistant.core.client import JuneClient
 
 
 def main():
+    # Fast-path for UI and script IPC queries to minimize latency and bypass ArgumentParser setup
+    if len(sys.argv) >= 2:
+        raw_cmd = sys.argv[1]
+        if raw_cmd == "--ping":
+            client = JuneClient()
+            res = client.ping()
+            if "--json" in sys.argv:
+                print(json.dumps(res, indent=2))
+            else:
+                print(f"Status: {res.get('status')} | Name: {res.get('name')} | Provider: {res.get('active_provider')} ({res.get('active_model')})")
+            return
+        elif raw_cmd == "--stop":
+            client = JuneClient()
+            res = client.emergency_stop()
+            if "--json" in sys.argv:
+                print(json.dumps(res, indent=2))
+            else:
+                print(f"Emergency stop sent: {res.get('status')}")
+            return
+        elif raw_cmd == "--history":
+            client = JuneClient()
+            res = client.get_messages()
+            if "--json" in sys.argv:
+                print(json.dumps(res, indent=2))
+            else:
+                for msg in res.get("messages", []):
+                    prefix = "User: " if msg.get("role") == "user" else "June: "
+                    print(f"{prefix}{msg.get('content')}")
+            return
+
     parser = argparse.ArgumentParser(
         description="June Personal AI Desktop Assistant",
         formatter_class=argparse.RawDescriptionHelpFormatter,

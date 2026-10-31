@@ -64,6 +64,22 @@ These checks run continuously during development on Windows and in automated Git
   }
   ```
 
+### 2.7 Automated Regression & Syntax Test Suite (74 Test Cases)
+Run the automated pytest suite across all subsystems:
+```powershell
+python -m pytest -v
+```
+**Test suites covered:**
+1. `tests/test_assistant_automation.py` (13 tests): Action planning AST decomposition, risk tier enforcement, screen analysis.
+2. `tests/test_assistant_foundation.py` (10 tests): Identity configuration, SQLite conversation store, provider registry.
+3. `tests/test_config_manager.py` (7 tests): Atomic JSON writes, schema migration, performance profile enforcement.
+4. `tests/test_developer_module.py` (17 tests): Project detection, git helper, python/node/ports/ssh inspectors.
+5. `tests/test_lua_syntax.py` (1 test): Balanced delimiter and global `hl` syntax verification for all 9 Hyprland Lua files.
+6. `tests/test_multilingual_engine.py` (13 tests): 7 language combinations, Devanagari Hindi/Marathi disambiguation, Romanized transliteration.
+7. `tests/test_productivity_backend.py` (4 tests): Clipboard history, screenshot orchestrator, markdown notes store.
+8. `tests/test_qml_syntax.py` (2 tests): Static syntax verification for all 41 Quickshell QML files and 4 theme JSON presets.
+9. `tests/test_system_backend.py` (7 tests): Wi-Fi, Hotspot AP detection, Bluetooth, Audio, Power profile daemons.
+
 ---
 
 ## 3. Runtime Verification Matrix (Arch Linux Wayland Host)

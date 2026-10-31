@@ -89,6 +89,13 @@ def validate_lua_file(path: str) -> bool:
     return True
 
 
+def test_hyprland_lua_syntax():
+    lua_files = glob.glob("core/hyprland/**/*.lua", recursive=True)
+    assert lua_files, "No Lua files found in core/hyprland/"
+    for f in lua_files:
+        assert validate_lua_file(f), f"Syntax validation failed for Lua file: {f}"
+
+
 def main():
     lua_files = glob.glob("core/hyprland/**/*.lua", recursive=True)
     if not lua_files:

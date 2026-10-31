@@ -1,13 +1,12 @@
 import QtQuick
 import QtQuick.Layouts
-import Quickshell.Io
 import "../services"
 
 Rectangle {
     id: battRoot
 
-    property int percentage: 85
-    property bool isCharging: false
+    property int percentage: HardwareService.batteryPercentage
+    property bool isCharging: HardwareService.isCharging
     property string icon: {
         if (isCharging) return "󰂄";
         if (percentage >= 90) return "󰁹";
@@ -24,32 +23,6 @@ Rectangle {
     color: ThemeService.colors.surfaceVariant
     border.color: ThemeService.colors.border
     border.width: ThemeService.metrics.borderWidth
-
-    // Read battery status via Process (battery-friendly interval: every 15s)
-    Process {
-        id: battProc
-        command: ["sh", "-c", "cat /sys/class/power_supply/BAT0/capacity 2>/dev/null; cat /sys/class/power_supply/BAT0/status 2>/dev/null"]
-        stdout: SplitParser {
-            onRead: function(data) {
-                var lines = data.trim().split("\n");
-                if (lines.length >= 1 && lines[0]) {
-                    var cap = parseInt(lines[0]);
-                    if (!isNaN(cap)) battRoot.percentage = cap;
-                }
-                if (lines.length >= 2) {
-                    battRoot.isCharging = (lines[1].trim() === "Charging");
-                }
-            }
-        }
-    }
-
-    Timer {
-        interval: 15000
-        running: true
-        repeat: true
-        triggeredOnStart: true
-        onTriggered: battProc.running = true
-    }
 
     RowLayout {
         id: battLayout
