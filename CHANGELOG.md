@@ -49,9 +49,18 @@ All notable changes, optimizations, and architectural refactorings for the **Tej
 - **Automated Syntax Test Coverage**:
   - Integrated `tests/test_lua_syntax.py` and `tests/test_qml_syntax.py` into pytest test suite.
   - Full test suite expanded from 71 to 74 tests, all passing cleanly in 8.01s.
-- **Documentation**:
+- **Arch Linux Verification & Benchmarking Scripts**:
+  - Authored `scripts/verify_arch_runtime.sh` for automated pre-flight runtime validation on Arch Linux Wayland sessions.
+  - Authored `scripts/benchmark_elitebook.sh` providing reproducible hardware benchmarking on the HP EliteBook 840 G5.
+- **Hyprland 0.57+ Upstream Compliance**:
+  - Enforced official Lua configuration (`hyprland.lua`) across all installer and compositor paths.
+  - Documented complete removal of legacy `.conf` support in upstream Hyprland 0.57+.
+- **Final Release Governance Documents**:
+  - Created `RELEASE_AUDIT.md` (QA tier separation, Hyprland 0.57+ Lua requirements).
+  - Created `INSTALLATION_READINESS.md` (hardware specs, dual-boot safety rules, deployment guide).
+  - Created `KNOWN_ISSUES.md` (upstream changes, iGPU blur parameters, 8 GB RAM constraints).
   - Created `PERFORMANCE_AUDIT.md` (in-depth audit of subprocesses, polling loops, memory).
   - Created `LANGUAGE_MAPPING.md` (221-file inventory with language justifications and actions).
   - Created `MIGRATION_PLAN.md` (phased migration roadmap).
-  - Created `PERFORMANCE_REPORT.md` (benchmark measurements pre- and post-refactor).
+  - Updated `PERFORMANCE_REPORT.md` (separating static synthetic tests from physical hardware benchmarks).
   - Updated `ARCHITECTURE.md`, `FEATURE_STATUS.md`, `TESTING.md`.

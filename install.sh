@@ -152,10 +152,14 @@ if command -v Hyprland >/dev/null 2>&1; then
     HYPR_NUM=$(echo "${HYPR_VER_RAW}" | grep -oE '[0-9]+\.[0-9]+' | head -n1)
     if [ -n "${HYPR_NUM}" ]; then
         HYPR_MIN=$(echo "${HYPR_NUM}" | cut -d. -f2)
-        if [ "${HYPR_MIN}" -ge 55 ] 2>/dev/null; then
-            echo -e "  ${GREEN}[✓] Hyprland >= 0.55: Deploying Native Lua configuration (hyprland.lua)${NC}"
+        if [ "${HYPR_MIN}" -ge 57 ] 2>/dev/null; then
+            echo -e "  ${GREEN}[✓] Hyprland >= 0.57 detected: Legacy .conf is completely dropped upstream.${NC}"
+            echo -e "  ${GREEN}[✓] Deploying official Native Lua configuration (hyprland.lua).${NC}"
+        elif [ "${HYPR_MIN}" -ge 55 ] 2>/dev/null; then
+            echo -e "  ${GREEN}[✓] Hyprland 0.55/0.56 detected: Native Lua configuration (hyprland.lua) officially supported.${NC}"
         else
-            echo -e "  ${YELLOW}[!] Hyprland < 0.55: Providing hyprland.conf compatibility bridge${NC}"
+            echo -e "  ${YELLOW}[!] Notice: Hyprland < 0.55 detected. Tejas OS officially targets Hyprland 0.55+ (Lua).${NC}"
+            echo -e "  ${YELLOW}[!] Legacy hyprland.conf provided for < 0.55 only; upgrade to Hyprland 0.55+ is strongly recommended.${NC}"
         fi
     fi
 fi

@@ -60,6 +60,30 @@ The following metrics were measured on the repository prior to refactoring:
 
 ---
 
-## 4. Verification Notes for Runtime Linux Hardware Testing
+## 4. Reproducible Hardware Benchmarking Procedure for HP EliteBook 840 G5
 
-*Note: Per AGENTS.md Section 4, static validation, schema validation, and Python profiling are verified on the authoring platform. Wayland compositor rendering (60 FPS vsync, Quickshell layer shell anchoring, Intel VA-API hardware video acceleration) must be validated on the physical HP EliteBook 840 G5 under Arch Linux.*
+To prevent confusing synthetic static metrics with physical hardware performance results, physical measurements must be executed on an active Arch Linux session using the provided benchmark tool:
+
+```bash
+# Execute automated hardware benchmark on physical laptop
+bash scripts/benchmark_elitebook.sh hardware_results.md
+```
+
+### 4.1 Target Metric Verification Criteria
+
+| Target Subsystem | Metric | Verification Tool | Pass Criterion (8 GB RAM Budget) |
+|---|---|---|---|
+| **System Memory at Idle** | Total RSS + Buffers/Cache | `free -m` | $\le 1,800\text{ MB}$ ($\le 1.8\text{ GB}$) |
+| **System CPU at Idle** | Background utilization | `vmstat 1 3` or `top` | $\le 2.0\%$ |
+| **Compositor Memory** | Hyprland RSS | `ps -C Hyprland -o rss=` | $\le 80\text{ MB}$ |
+| **Desktop Shell Memory** | Quickshell RSS | `ps -C quickshell -o rss=` | $\le 150\text{ MB}$ |
+| **June AI Daemon Memory** | Python Daemon RSS | `ps -f -C python3` | $\le 45\text{ MB}$ |
+| **Desktop Startup Time** | Kernel + Userspace | `systemd-analyze` | $\le 8.0\text{ seconds}$ on NVMe SSD |
+| **Compositor Frame Pacing** | Wayland vsync | `hyprctl monitors` | Steady 60.00 Hz without jitter |
+| **Profile CPU Governor** | Energy Policy | `powerprofilesctl get` | Synchronized with active profile (`powersave` / `performance` / `balanced`) |
+
+---
+
+## 5. Verification Boundary & Status Policy
+
+*Per AGENTS.md Section 4, static validation, schema validation, and Python profiling are verified on the development host. Wayland compositor rendering (60 FPS vsync, Quickshell layer shell anchoring, Intel VA-API hardware video acceleration) must be validated on the physical HP EliteBook 840 G5 under native Arch Linux. The project is NOT marked fully hardware-tested until this verification is completed.*

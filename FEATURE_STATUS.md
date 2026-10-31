@@ -167,3 +167,8 @@
 | June Daemon Lazy Engines | 🟢 Completed | `assistant/core/daemon.py` | Lazy initializes screen, file, research, and voice |
 | June CLI Fast-Path Dispatch | 🟢 Completed | `assistant/core/cli.py` | Low-latency ping, history, and stop handling |
 | Syntax Automated Tests | 🟢 Completed | `tests/test_lua_syntax.py`, `tests/test_qml_syntax.py` | Pytest fixtures validating all 9 Lua & 41 QML files |
+| Release Audit & QA Boundary | 🟢 Completed | `RELEASE_AUDIT.md` | QA tier separation, Hyprland 0.57+ Lua requirements |
+| Installation Readiness Guide | 🟢 Completed | `INSTALLATION_READINESS.md` | Deployment guide & dual-boot safety checklist |
+| Known Issues & Constraints | 🟢 Completed | `KNOWN_ISSUES.md` | Upstream changes, iGPU blur & 8 GB RAM constraints |
+| Arch Linux Verification Suite | 🟢 Completed | `scripts/verify_arch_runtime.sh` | Automated runtime checker for Arch Linux sessions |
+| EliteBook Benchmark Suite | 🟢 Completed | `scripts/benchmark_elitebook.sh` | Reproducible hardware benchmark for HP EliteBook 840 G5 |
